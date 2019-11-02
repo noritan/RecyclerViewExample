@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">RecyclerViewExample</string>
+    <string name="avatar_text">アバター</string>
+    <string name="linear_layout_manager">LinearLayoutManager</string>
 </resources>
