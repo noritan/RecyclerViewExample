@@ -28,6 +28,12 @@ class MainActivity : AppCompatActivity() {
         data.add(CustomDataItem(R.drawable.nasuno_nasushirt, "なすシャツ"))
         data.add(CustomDataItem(R.drawable.neko_640, "ねこ"))
         data.add(CustomDataItem(R.drawable.poppo, "ぽっぽ"))
+        data.add(CustomDataItem(R.drawable.hitodeman, "ひとでまん (2)"))
+        data.add(CustomDataItem(R.drawable.bootloader_so8, "基板 (2)"))
+        data.add(CustomDataItem(R.drawable.kin1, "金将 (2)"))
+        data.add(CustomDataItem(R.drawable.kairosu, "かいろす (2)"))
+        data.add(CustomDataItem(R.drawable.nasubo64, "なす棒 (2)"))
+        data.add(CustomDataItem(R.drawable.nasu64, "なす (2)"))
 
         contentRecyclerView.adapter = CustomRecycleViewAdapter(data)
     }
