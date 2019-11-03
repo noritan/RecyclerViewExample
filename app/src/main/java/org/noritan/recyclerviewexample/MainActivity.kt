@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
-import org.noritan.recyclerviewexample.databinding.AnotherItemBinding
-import org.noritan.recyclerviewexample.databinding.OneItemBinding
+import kotlinx.android.synthetic.main.one_item.view.*
 
 class MainActivity : AppCompatActivity() {
     private val data: MutableList<CustomDataItem> = mutableListOf()
@@ -36,8 +36,8 @@ class MainActivity : AppCompatActivity() {
 
     class CustomRecycleViewAdapter(val data: List<CustomDataItem>): RecyclerView.Adapter<CustomViewHolder>() {
         companion object {
-            val EVEN_TYPE = 0
-            val ODD_TYPE = 1
+            const val EVEN_TYPE = 0
+            const val ODD_TYPE = 1
         }
 
         override fun getItemViewType(position: Int): Int {
@@ -45,13 +45,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-            val holder: CustomViewHolder
-            if (viewType == EVEN_TYPE) {
-                holder = EvenViewHolder.onCreateViewHolder(parent, viewType)
+            val itemView = if (viewType == EVEN_TYPE) {
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.one_item, parent, false)
             } else {
-                holder = OddViewHolder.onCreateViewHolder(parent, viewType)
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.another_item, parent, false)
             }
-            return holder
+            return CustomViewHolder(itemView)
         }
 
         override fun getItemCount(): Int {
@@ -59,45 +60,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-            holder.setContent(data[position])
+            val dataItem = data[position]
+            holder.avatarImageView.setImageResource(dataItem.avatar)
+            holder.descriptionTextView.text = dataItem.description
         }
     }
 
-    abstract class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        abstract fun setContent(dataItem: CustomDataItem)
-    }
-
-    class EvenViewHolder(itemView: View) : CustomViewHolder(itemView) {
-        companion object {
-            fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-                val itemView = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.one_item, parent, false)
-                return EvenViewHolder(itemView)
-            }
-        }
-
-        private val binding = DataBindingUtil.bind<OneItemBinding>(itemView)
-
-        override fun setContent(dataItem: CustomDataItem) {
-            binding?.avatarImageView?.setImageResource(dataItem.avatar)
-            binding?.descriptionTextView?.text = dataItem.description
-        }
-    }
-
-    class OddViewHolder(itemView: View) : CustomViewHolder(itemView) {
-        companion object {
-            fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-                val itemView = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.another_item, parent, false)
-                return OddViewHolder(itemView)
-            }
-        }
-
-        private val binding = DataBindingUtil.bind<AnotherItemBinding>(itemView)
-
-        override fun setContent(dataItem: CustomDataItem) {
-            binding?.avatarImageView?.setImageResource(dataItem.avatar)
-            binding?.descriptionTextView?.text = dataItem.description
-        }
+    class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val avatarImageView: ImageView = itemView.avatarImageView
+        val descriptionTextView: TextView = itemView.descriptionTextView
     }
 }
