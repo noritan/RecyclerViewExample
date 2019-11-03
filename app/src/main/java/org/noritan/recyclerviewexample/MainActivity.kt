@@ -44,9 +44,23 @@ class MainActivity : AppCompatActivity() {
     data class CustomDataItem(val avatar: Int, val description: String)
 
     class CustomRecycleViewAdapter(val data: List<CustomDataItem>): RecyclerView.Adapter<CustomViewHolder>() {
+        companion object {
+            val EVEN_TYPE = 0
+            val ODD_TYPE = 1
+        }
+
+        override fun getItemViewType(position: Int): Int {
+            return if (position % 2 == 0) EVEN_TYPE else ODD_TYPE
+        }
+
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
+            val layoutId = when (viewType) {
+                EVEN_TYPE -> R.layout.one_item
+                ODD_TYPE -> R.layout.another_item
+                else -> R.layout.one_item
+            }
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.another_item, parent, false)
+                .inflate(layoutId, parent, false)
             return CustomViewHolder(view)
         }
 
