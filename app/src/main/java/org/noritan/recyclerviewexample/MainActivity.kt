@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
     class CustomRecycleViewAdapter(val data: List<CustomDataItem>): RecyclerView.Adapter<CustomViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.one_item, parent, false)
+                .inflate(R.layout.another_item, parent, false)
             return CustomViewHolder(view)
         }
 
